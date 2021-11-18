@@ -32,7 +32,7 @@ def Open_Screen():
 def Menu_Choice():
     choice = input("\n Welcome {}, Please type the letter of your choice and press enter > ".format(name))
     if choice.lower() == 'a':
-        pass
+        return
     elif choice.lower() == 'b':
         pass
     elif choice.lower() == 'c':
@@ -52,9 +52,9 @@ def random_card():
     else:
         return card3
 def create_random_deck():
-    deck = []
-    card_choice = random.randint(1,3)
-    for x in 7:
+    deck = [] 
+    for x in range(0,7):
+        card_choice = random.randint(1,3)
         if card_choice == 1:
             deck.append(card1)
         elif card_choice == 2:
@@ -84,6 +84,14 @@ main_p = Player(100)
 
 name = Open_Screen()
 Menu_Choice()
+
+def test1():
+    print(main_p.deck)
+    print("\n")
+    for i in range(0,2):
+        main_p.draw_card()
+        print("\n" + main_p.deck)
+
 
 
 
