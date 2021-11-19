@@ -36,7 +36,11 @@ def Credits():
 def Menu_Choice():    
     choice = input("\n Welcome {}, Please type the letter of your choice and press enter > ".format(name))
     if choice.lower() == 'a':
+<<<<<<< HEAD
+        return
+=======
         Game(False)
+>>>>>>> 8e560e8a42297b4591da2cd39b3996e9cb109ee1
     elif choice.lower() == 'b':
         Credits()
     elif choice.lower() == 'c':
@@ -79,9 +83,15 @@ def random_card():
     else:
         return card4
 def create_random_deck():
+<<<<<<< HEAD
+    deck = [] 
+    for x in range(0,7):
+        card_choice = random.randint(1,3)
+=======
     deck = []    
     for x in range(0,7):
         card_choice = random.randint(1,4)
+>>>>>>> 8e560e8a42297b4591da2cd39b3996e9cb109ee1
         if card_choice == 1:
             deck.append(card1)
         elif card_choice == 2:
@@ -179,6 +189,14 @@ enemy = Player(80,2)
 # PROGRAM START
 name = Open_Screen(None)
 Menu_Choice()
+
+def test1():
+    print(main_p.deck)
+    print("\n")
+    for i in range(0,2):
+        main_p.draw_card()
+        print("\n" + main_p.deck)
+
 
 
 
