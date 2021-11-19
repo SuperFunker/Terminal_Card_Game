@@ -180,13 +180,6 @@ enemy = Player(80,2)
 name = Open_Screen(None)
 Menu_Choice()
 
-def test1():
-    print(main_p.deck)
-    print("\n")
-    for i in range(0,2):
-        main_p.draw_card()
-        print("\n" + main_p.deck)
-
 
 
 
