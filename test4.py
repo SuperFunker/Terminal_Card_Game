@@ -160,8 +160,8 @@ class Player():
         if self.total_health > 100:
             self.total_health = 100
     def Death(self,player_id):
-        _ = system('cls')
-        print("\n\t\t\t GAME \t OVER")
+        _ = system('clear')
+        print("\n\t\t\t GAME    OVER")
         if player_id == main_p.player_id:
             print("\n\n\n\n\tYou have Died")
             sleep(6)
