@@ -16,27 +16,24 @@ class Card():
 card1 = Card(1,"Fireball (10 damage)", 10)
 card2 = Card(2,"Bite (5 attack / 5 heal)",5,5)
 card3 = Card(3,"Health Potion (15 heal)",0,15)
-card4 = Card(4, "Battle Axe (10 Damage)",10)
-
-#region function ideas
-def update_screen():
-    pass
-#endregion
+card4 = Card(4, "Battle Axe (20 Damage)",20)
 
 #region GUI
-def Open_Screen():
+def Open_Screen(name_is):
     _ = system('clear')
     print("\tWelcome To Deadly Roads")
     print("\n A) Play\n B) Credits\n C) Exit")
-    name = input("\n\n Please type your name first. > ")
-    return name
+    if name_is is None:
+        name = input("\n\n Please type your name first. > ")        
+        return name       
+    else:
+        Menu_Choice()
 def Credits():
     _ = system('clear')
     print("\n\n\t\tMade by John")
     sleep(4)
-    Menu_Choice()
-def Menu_Choice():
-    _ = system('clear')
+    Open_Screen('has')
+def Menu_Choice():    
     choice = input("\n Welcome {}, Please type the letter of your choice and press enter > ".format(name))
     if choice.lower() == 'a':
         Game(False)
@@ -46,7 +43,8 @@ def Menu_Choice():
         exit()
     else:
         print("\n This is not a valid choice")
-        Menu_Choice()
+        sleep(1)
+        Open_Screen('has')
 def Game(turn):
     _ = system('clear')
     print("\nEnemy Health: {}".format(enemy.total_health))
@@ -65,7 +63,7 @@ def Game(turn):
             sleep(2)
             Game(False)
     else:
-        card_ind2 = random.randint(1,7)
+        card_ind2 = random.randint(1,6)
         chosen_card2 = enemy.deck[card_ind2]
         enemy.play_card(card_ind2,chosen_card2)
 
@@ -93,51 +91,51 @@ def create_random_deck():
         else:
             deck.append(card4)
     return deck
-def card_played(card_id,player_id):
-    if card_id == 1:
+def card_played(card,player_id):
+    if card.id == 1:
         if player_id == 1:
-            enemy.take_damage(10)
+            enemy.take_damage(card.damage)
             print("\nYou played Fireball !")
             sleep(2)
             Game(True)
         else:
-            main_p.take_damage(10)
-            print("\nEnemy Played Fireball !")
+            main_p.take_damage(card.damage)
+            print("\n\n\nEnemy Played Fireball !")
             sleep(2)
             Game(False)
-    elif card_id == 2:
+    elif card.id == 2:
         if player_id == 1:
-            enemy.take_damage(5)
-            main_p.healed(5)
+            enemy.take_damage(card.damage)
+            main_p.healed(card.heal)
             print("\nYou played Bite !")
             sleep(2)
             Game(True)
         else:
-            enemy.healed(5)
-            main_p.take_damage(5)
-            print("\nEnemy Played Bite !")
+            enemy.healed(card.heal)
+            main_p.take_damage(card.damage)
+            print("\n\n\nEnemy Played Bite !")
             sleep(2)
             Game(False)
-    elif card_id == 3:
+    elif card.id == 3:
         if player_id == 1:
-            main_p.healed(15)
+            main_p.healed(card.heal)
             print("\nYou played Health Potion !")
             sleep(2)
             Game(True)
         else:
-            enemy.healed(15)
-            print("\nEnemy Played Health Potion !")
+            enemy.healed(card.heal)
+            print("\n\n\nEnemy Played Health Potion !")
             sleep(2)
             Game(False)
     else:
         if player_id == 1:
-            enemy.take_damage(10)
+            enemy.take_damage(card.damage)
             print("\nYou played Battle Axe !")
             sleep(2)
             Game(True)
         else:
-            main_p.take_damage(10)
-            print("\nEnemy Played Battle Axe !")
+            main_p.take_damage(card.damage)
+            print("\n\n\nEnemy Played Battle Axe !")
             sleep(2)
             Game(False)
 
@@ -149,22 +147,39 @@ class Player():
         self.deck = create_random_deck()
     def draw_card(self):
         self.deck.append(random_card())
-    def play_card(self,card_index,card):
+    def play_card(self,card_index,card):        
         self.deck.pop(card_index - 1)        
-        self.draw_card()        
-        card_played(card.id,self.player_id)
+        self.draw_card()                
+        card_played(card,self.player_id)
     def take_damage(self,amnt):
         self.total_health -= amnt
+        if self.total_health <= 0:
+            self.Death(self.player_id)    
     def healed(self,amnt):
         self.total_health += amnt
+        if self.total_health > 100:
+            self.total_health = 100
+    def Death(self,player_id):
+        _ = system('cls')
+        print("\n\t\t\t GAME \t OVER")
+        if player_id == main_p.player_id:
+            print("\n\n\n\n\tYou have Died")
+            sleep(6)
+            Open_Screen('has')
+        else:
+            print("\n\n\n\n\t You Won")
+            sleep(6)
+            Open_Screen('has')
 #endregion
 
+# PLAYERS
 main_p = Player(100,1)
 enemy = Player(80,2)
 
-
-name = Open_Screen()
+# PROGRAM START
+name = Open_Screen(None)
 Menu_Choice()
+
 
 
 
