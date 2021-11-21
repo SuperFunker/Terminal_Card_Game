@@ -114,7 +114,7 @@ def random_card():
 def create_random_deck():
     deck = []    
     for x in range(0,7):
-        card_choice = random.randint(1,4)
+        card_choice = random.randint(1,5)
         if card_choice == 1:
             deck.append(card1)
         elif card_choice == 2:
@@ -165,10 +165,6 @@ def card_played(card,player_id):
     elif card.id == 4:
         if player_id == 1:
             enemy.take_damage(card.damage)
-            print("\nYou played Sword !")
-    else:
-        if player_id == 1:
-            enemy.take_damage(card.damage)
             print("\nYou played Battle Axe !")
             sleep(2)
             Game(True)
@@ -176,7 +172,19 @@ def card_played(card,player_id):
             main_p.take_damage(card.damage)
             print("\n\n\nEnemy Played Battle Axe !")
             sleep(2)
-            Game(False)      
+            Game(False)  
+    else:
+        if player_id == 1:
+            enemy.take_damage(card.damage)
+            print("\nYou played Sword !")
+            sleep(2)
+            Game(True)
+        else:
+            main_p.take_damage(card.damage)
+            print("\n\n\nEnemy Played Battle Axe !")
+            sleep(2)
+            Game(False)
+                
 #endregion
 
 # PLAYERS
