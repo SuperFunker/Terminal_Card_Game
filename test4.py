@@ -12,11 +12,42 @@ class Card():
         return self.description
     def playing():
         pass
-
-card1 = Card(1,"Fireball (10 damage)", 10)
+class Player():
+    def __init__(self,total_health,player_id):
+        self.total_health = total_health
+        self.player_id = player_id
+        self.deck = create_random_deck()
+    def draw_card(self):
+        self.deck.append(random_card())
+    def play_card(self,card_index,card):        
+        self.deck.pop(card_index - 1)        
+        self.draw_card()                
+        card_played(card,self.player_id)
+    def take_damage(self,amnt):
+        self.total_health -= amnt
+        if self.total_health <= 0:
+            self.Death(self.player_id)    
+    def healed(self,amnt):
+        self.total_health += amnt
+        if self.total_health > 100:
+            self.total_health = 100
+    def Death(self,player_id):
+        _ = system('clear')
+        print("\n\t\t\t GAME    OVER")
+        if player_id == main_p.player_id:
+            print("\n\n\n\n\tYou have Died")
+            sleep(6)
+            Open_Screen('has')
+        else:
+            print("\n\n\n\n\t You Won")
+            sleep(6)
+            Open_Screen('has')
+# CARDS
+card1 = Card(1,"Fireball (15 damage)", 15)
 card2 = Card(2,"Bite (5 attack / 5 heal)",5,5)
 card3 = Card(3,"Health Potion (15 heal)",0,15)
 card4 = Card(4, "Battle Axe (20 Damage)",20)
+card5 = Card(5, "Sword (13 Damage)", 13)
 
 #region GUI
 def Open_Screen(name_is):
@@ -66,18 +97,20 @@ def Game(turn):
         card_ind2 = random.randint(1,6)
         chosen_card2 = enemy.deck[card_ind2]
         enemy.play_card(card_ind2,chosen_card2)
-
+#endregion
 #region MECHANICS
 def random_card():    
-    r = random.randint(1,4)
+    r = random.randint(1,5)
     if r == 1:
         return card1
     elif r == 2:
         return card2
     elif r == 3:
         return card3
-    else:
+    elif r == 4:
         return card4
+    else:
+        return card5
 def create_random_deck():
     deck = []    
     for x in range(0,7):
@@ -88,8 +121,10 @@ def create_random_deck():
             deck.append(card2)
         elif card_choice == 3:
             deck.append(card3)
-        else:
+        elif card_choice == 4:
             deck.append(card4)
+        else:
+            deck.append(card5)
     return deck
 def card_played(card,player_id):
     if card.id == 1:
@@ -127,6 +162,10 @@ def card_played(card,player_id):
             print("\n\n\nEnemy Played Health Potion !")
             sleep(2)
             Game(False)
+    elif card.id == 4:
+        if player_id == 1:
+            enemy.take_damage(card.damage)
+            print("\nYou played Sword !")
     else:
         if player_id == 1:
             enemy.take_damage(card.damage)
@@ -137,39 +176,7 @@ def card_played(card,player_id):
             main_p.take_damage(card.damage)
             print("\n\n\nEnemy Played Battle Axe !")
             sleep(2)
-            Game(False)
-
-        
-class Player():
-    def __init__(self,total_health,player_id):
-        self.total_health = total_health
-        self.player_id = player_id
-        self.deck = create_random_deck()
-    def draw_card(self):
-        self.deck.append(random_card())
-    def play_card(self,card_index,card):        
-        self.deck.pop(card_index - 1)        
-        self.draw_card()                
-        card_played(card,self.player_id)
-    def take_damage(self,amnt):
-        self.total_health -= amnt
-        if self.total_health <= 0:
-            self.Death(self.player_id)    
-    def healed(self,amnt):
-        self.total_health += amnt
-        if self.total_health > 100:
-            self.total_health = 100
-    def Death(self,player_id):
-        _ = system('clear')
-        print("\n\t\t\t GAME    OVER")
-        if player_id == main_p.player_id:
-            print("\n\n\n\n\tYou have Died")
-            sleep(6)
-            Open_Screen('has')
-        else:
-            print("\n\n\n\n\t You Won")
-            sleep(6)
-            Open_Screen('has')
+            Game(False)      
 #endregion
 
 # PLAYERS
