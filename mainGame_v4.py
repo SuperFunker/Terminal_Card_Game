@@ -98,6 +98,7 @@ def Game(turn):
         chosen_card2 = enemy.deck[card_ind2]
         enemy.play_card(card_ind2,chosen_card2)
 #endregion
+
 #region MECHANICS
 def random_card():    
     r = random.randint(1,5)
